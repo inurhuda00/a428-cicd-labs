@@ -1,0 +1,68 @@
+Started by user Dicoding Indonesia
+Obtained Jenkinsfile from git https://github.com/inurhuda00/simple-python-pyinstaller-app.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . python:2-alpine
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins does not seem to be running inside a container
+$ docker run -t -d -u 1000:1000 -w /var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00 -v /var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00:/var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00:rw,z -v /var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00@tmp:/var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** python:2-alpine cat
+$ docker top 60896da15c906a9b981cf415d152ecf2a900e4fd125df6f049b4fe0f91503102 -eo pid,comm
+[Pipeline] {
+[Pipeline] sh
++ python -m py_compile sources/add2vals.py sources/calc.py
+[Pipeline] stash
+Stashed 5 file(s)
+[Pipeline] }
+$ docker stop --time=1 60896da15c906a9b981cf415d152ecf2a900e4fd125df6f049b4fe0f91503102
+$ docker rm -f 60896da15c906a9b981cf415d152ecf2a900e4fd125df6f049b4fe0f91503102
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . qnib/pytest
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins does not seem to be running inside a container
+$ docker run -t -d -u 1000:1000 -w /var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00 -v /var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00:/var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00:rw,z -v /var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00@tmp:/var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** qnib/pytest cat
+$ docker top 5ef2dc37f01f113556c8f6c1af7f209b1e57814126c45b867379a5c62b092e43 -eo pid,comm
+[Pipeline] {
+[Pipeline] sh
++ py.test --junit-xml test-reports/results.xml sources/test_calc.py
+============================= test session starts ==============================
+platform linux2 -- Python 2.7.14, pytest-3.5.0, py-1.5.3, pluggy-0.6.0
+rootdir: /var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00, inifile:
+plugins: cov-2.5.1
+collected 5 items
+
+sources/test_calc.py .....                                               [100%]
+
+ generated xml file: /var/jenkins_home/workspace/submission-cicd-pipeline-inurhuda00/test-reports/results.xml 
+=========================== 5 passed in 0.04 seconds ===========================
+[Pipeline] }
+$ docker stop --time=1 5ef2dc37f01f113556c8f6c1af7f209b1e57814126c45b867379a5c62b092e43
+$ docker rm -f 5ef2dc37f01f113556c8f6c1af7f209b1e57814126c45b867379a5c62b092e43
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
